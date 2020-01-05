@@ -1,19 +1,18 @@
 import smtplib as root
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import random
+import string
+
 
 def send_mail():
-    #login=input('введите почту: ')
     login="asferrotest@gmail.com"
-    #password=input('введите пароль: ')
     password="asferro123"
-    #url=input('введите URL: ')
     url="smtp.gmail.com"
-    #toaddr=input('кому: ')
     toaddr=login
-    topic=input('тема: ')
-    message=input('введите сообщение: ')
-    num = int(input('количество сообщений: '))
+    topic=''.join(random.choice(string.ascii_letters + string.digits) for i in range(10))
+    message=''.join(random.choice(string.ascii_letters + string.digits) for i in range(10))
+    num = 15
 
     for value in range (num):
         msg=MIMEMultipart()
