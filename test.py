@@ -3,6 +3,21 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import random
 import string
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+
+browser=webdriver.Chrome()
+browser.get('https://gmail.com/')
+
+def login():
+    textarea=browser.find_element_by_id('identifierId')
+    textarea.send_keys("asferrotest@gmail.com")
+    textarea.send_keys(Keys.ENTER)
+    time.sleep(1)
+    textarea2=browser.find_element_by_name('password')
+    textarea2.send_keys('asferro123'+"\n")
+
 
 
 def send_mail():
@@ -29,7 +44,9 @@ def send_mail():
         print('Отравлено: '+str(value))
 
 def main():
+    login()
     send_mail()
+    
 
 if __name__ == '__main__':
     main()
