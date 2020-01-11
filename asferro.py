@@ -22,7 +22,7 @@ def login():
 
 
 
-def send_mail():
+def sendMail():
     login="asferrotest@gmail.com"
     password="asferro123"
     url="smtp.gmail.com"
@@ -55,20 +55,45 @@ def send_mail():
         value+=1
         print('Сообщение '+str(value)+' доставлено')
         
+def getMessages(browser):
+    global dictionary
+    dictionary = {"key":"value"}
+    print(dictionary)
+    k=browser.find_elements_by_xpath("//div[@class='UI']//table//tbody/tr//following-sibling::td[5]//span[@class='bog']/span")
+    v=browser.find_elements_by_xpath("/html[1]/body[1]/div[7]/div[3]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[6]/div[1]/div[1]/div[3]/div[1]/table[1]/tbody[1]/tr[1]/td[6]/div[1]/div[1]/span[1]")
+    for x in k:
+        for y in v:
+            dictionary.update({x.text:y.text})
+    print(dictionary)
+
+def sendReport():
+    print(dictionary)
+
+
+
 
 def delete():
-    delete=browser.find_element_by_id(':2t')
-    delete.click()
-    delete2=browser.find_element_by_id(':31')
-    delete2.click()
+    browser.find_element_by_id(':2l').click()
+    time.sleep(1)
+
+    browser.find_element_by_id(':2t').click()
     time.sleep(2)
+
+    browser.find_element_by_xpath("*//div[@class='T-I J-J5-Ji nX T-I-ax7 T-I-Js-Gs mA']").click()
+    time.sleep(2)
+
 
 
 
 def main():
     login()
-    send_mail()
+    sendMail()
+    browser.refresh()
+    time.sleep(5)
+    getMessages(browser)
+    sendReport()
     delete()
+    browser.close()
     
 
 if __name__ == '__main__':
