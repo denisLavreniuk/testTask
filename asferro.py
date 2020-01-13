@@ -31,7 +31,7 @@ def sendMail():
     url = "smtp.gmail.com"
     global toaddr
     toaddr = login
-    num = 15
+    num = 5
 
     for value in range(num):
         topic = ''.join(random.choice(string.ascii_letters +string.digits) for i in range(10))
@@ -57,13 +57,13 @@ def getMessages(browser):
     dictionary = {"key": "value"}
     print(dictionary)
     k = browser.find_elements_by_xpath("//div[@class='UI']//table//tbody/tr//following-sibling::td[5]//span[@class='bog']/span")
-    v = browser.find_elements_by_xpath("/html[1]/body[1]/div[7]/div[3]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[6]/div[1]/div[1]/div[3]/div[1]/table[1]/tbody[1]/tr[1]/td[6]/div[1]/div[1]/span[1]")
-    for x in k:
+    v = browser.find_elements_by_xpath("/html[1]/body[1]/div[7]/div[3]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[6]/div[1]/div[1]/div[3]/div[1]/table[1]/tbody[1]//td[6]/div[1]/div[1]/span[1]")
+    for x in k:                 
         print(x.text)
         for y in v:
             dictionary.update({x.text: y.text})
-            print(y.text)
-        print(dictionary)
+            # print(y.text)
+            print(dictionary)
 
 
 def getReport():
