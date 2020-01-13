@@ -31,7 +31,7 @@ def sendMail():
     url = "smtp.gmail.com"
     global toaddr
     toaddr = login
-    num = 5
+    num = 15
 
     for value in range(num):
         topic = ''.join(random.choice(string.ascii_letters +string.digits) for i in range(10))
