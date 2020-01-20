@@ -8,6 +8,12 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.wait import WebDriverWait
 
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+
 # from selenium.webdriver.common.by import By
 # from selenium.webdriver.support.ui import WebDriverWait
 # from selenium.webdriver.support import expected_conditions as ec
@@ -22,12 +28,20 @@ browser.wait = WebDriverWait(browser, 5)
 
 
 def login():
-    textarea = browser.find_element_by_id('identifierId')
-    textarea.send_keys("asferrotest@gmail.com")
-    textarea.send_keys(Keys.ENTER)
-    time.sleep(1)
-    textarea2 = browser.find_element_by_name('password')
-    textarea2.send_keys('asferro123'+"\n")
+    try:
+        textarea=WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.ID, 'identifierId')))
+    finally:
+        textarea = browser.find_element_by_id('identifierId')
+        textarea.send_keys("asferrotest@gmail.com")
+        textarea.send_keys(Keys.ENTER)
+        # time.sleep(1)
+    try:
+        textarea2=WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.NAME, 'password')))
+    finally:
+        textarea2 = browser.find_element_by_name('password')
+        textarea2.send_keys('asferro123')
+        time.sleep(1)
+        browser.find_element_by_class_name('CwaK9').click()
 
 
 
@@ -62,19 +76,22 @@ def login():
 
 
 def getMessages(browser):
-    global dictionary
-    dictionary = {"key": "value"}
-    print(dictionary)
-    # k = browser.find_elements_by_xpath("//div[@class='UI']//table//tbody/tr//following-sibling::td[5]//span[@class='bog']/span")
-    k = browser.find_elements_by_xpath("//span[@class='bog']/span")
-    # v = browser.find_elements_by_xpath("/html[1]/body[1]/div[7]/div[3]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[6]/div[1]/div[1]/div[3]/div[1]/table[1]/tbody[1]//td[6]/div[1]/div[1]/span[1]")
-    v = browser.find_elements_by_xpath("//span[@class='y2'][last()]")
-    for x in k:                 
-        print(x.text)
-        for y in v:
-            dictionary.update({x.text: y.text})
-            # print(y.text)
-            print(dictionary)
+    try:
+        WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='bog']/span")))
+    finally:
+        global dictionary
+        dictionary = {"key": "value"}
+        print(dictionary)
+        # k = browser.find_elements_by_xpath("//div[@class='UI']//table//tbody/tr//following-sibling::td[5]//span[@class='bog']/span")
+        k = browser.find_elements_by_xpath("//span[@class='bog']/span")
+        # v = browser.find_elements_by_xpath("/html[1]/body[1]/div[7]/div[3]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[6]/div[1]/div[1]/div[3]/div[1]/table[1]/tbody[1]//td[6]/div[1]/div[1]/span[1]")
+        v = browser.find_elements_by_xpath("//span[@class='y2'][last()]")
+        for x in k:                 
+            print(x.text)
+            for y in v:
+                dictionary.update({x.text: y.text})
+                # print(y.text)
+                print(dictionary)
 
 
 # def getReport():
@@ -113,17 +130,26 @@ def getMessages(browser):
 
 
 def delete():
-    browser.find_element_by_xpath("*//div[@class='T-I J-J5-Ji nu T-I-ax7 L3']").click()
-    time.sleep(2)
+    try:
+        WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, "*//div[@class='T-I J-J5-Ji nu T-I-ax7 L3']")))
+    finally:
+        browser.find_element_by_xpath("*//div[@class='T-I J-J5-Ji nu T-I-ax7 L3']").click()
+    # time.sleep(2)
+
     # browser.find_element_by_id(':2l').click()
     # browser.find_element_by_xpath("*//@div[@class='T-Jo J-J5-Ji T-Jo-auq T-Jo-iAfbIe']").click()
     # time.sleep(2)
+    try:
+        WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.ID, ':2t')))
+    finally:
+        browser.find_element_by_id(':2t').click()
+    # time.sleep(2)
 
-    browser.find_element_by_id(':2t').click()
-    time.sleep(2)
-
-    browser.find_element_by_xpath("*//div[@class='T-I J-J5-Ji nX T-I-ax7 T-I-Js-Gs mA']").click()
-    time.sleep(2)
+    try:
+        WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, "*//div[@class='T-I J-J5-Ji nX T-I-ax7 T-I-Js-Gs mA']")))
+    finally:
+        browser.find_element_by_xpath("*//div[@class='T-I J-J5-Ji nX T-I-ax7 T-I-Js-Gs mA']").click()
+        # time.sleep(2)
 
 
 
@@ -136,14 +162,19 @@ def sendMail():
         topic = ''.join(random.choice(string.ascii_letters +string.digits) for i in range(10))
         message = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(10))
 
-
-        browser.find_element_by_xpath("*//div[@class='T-I J-J5-Ji T-I-KE L3']").click()
-        time.sleep(2)
-        browser.find_element_by_xpath("*//div[@class='fX aXjCH']//td[@class='eV']//textarea[@name='to']").send_keys(login)
-        browser.find_element_by_name('subjectbox').send_keys(topic)
-        browser.find_element_by_xpath("*//div[@class='Am Al editable LW-avf tS-tW']").send_keys(message)
-        browser.find_element_by_xpath("*//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']").click()
-        print('Сообщение '+str(value)+' доставлено')
+        try:
+            WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, "*//div[@class='T-I J-J5-Ji T-I-KE L3']")))
+        finally:
+            browser.find_element_by_xpath("*//div[@class='T-I J-J5-Ji T-I-KE L3']").click()
+        # time.sleep(2)
+        try:
+            WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, '*//div[@class="fX aXjCH"]//td[@class="eV"]//textarea[@name="to"]')))
+        finally:
+            browser.find_element_by_xpath("*//div[@class='fX aXjCH']//td[@class='eV']//textarea[@name='to']").send_keys(login)
+            browser.find_element_by_name('subjectbox').send_keys(topic)
+            browser.find_element_by_xpath("*//div[@class='Am Al editable LW-avf tS-tW']").send_keys(message)
+            browser.find_element_by_xpath("*//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']").click()
+            print('Сообщение '+str(value)+' доставлено')
         # time.sleep(2)
 
 
@@ -175,26 +206,30 @@ def report():
     print('m=======       '+m)
 
     browser.find_element_by_xpath("*//div[@class='T-I J-J5-Ji T-I-KE L3']").click()
-    time.sleep(2)
-    browser.find_element_by_xpath("*//div[@class='fX aXjCH']//td[@class='eV']//textarea[@name='to']").send_keys(login)
-    browser.find_element_by_name('subjectbox').send_keys("report")
-    browser.find_element_by_xpath("*//div[@class='Am Al editable LW-avf tS-tW']").send_keys(m)
-    browser.find_element_by_xpath("*//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']").click()
-    time.sleep(2)
+    # time.sleep(2)
+    try:
+        WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, "*//div[@class='fX aXjCH']//td[@class='eV']//textarea[@name='to']")))
+    finally:
+        browser.find_element_by_xpath("*//div[@class='fX aXjCH']//td[@class='eV']//textarea[@name='to']").send_keys(login)
+        browser.find_element_by_name('subjectbox').send_keys("report")
+        browser.find_element_by_xpath("*//div[@class='Am Al editable LW-avf tS-tW']").send_keys(m)
+        browser.find_element_by_xpath("*//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']").click()
+    # time.sleep(2)
 
 
 
 def main():
     login()
-    time.sleep(2)
+    # time.sleep(2)
     sendMail()
     time.sleep(2)
     browser.refresh()
-    time.sleep(5)
+    # time.sleep(5)
     getMessages(browser)
     # getReport()
     delete()
     report()
+    time.sleep(1)
     browser.close()
 
 
