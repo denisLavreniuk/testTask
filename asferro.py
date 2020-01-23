@@ -128,14 +128,16 @@ def delete():
     finally:
         browser.find_element_by_xpath("*//div[@class='T-I J-J5-Ji nu T-I-ax7 L3']").click()
     # time.sleep(2)
-
-    # browser.find_element_by_id(':2l').click()
+    try:
+        WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.ID, ':2l')))
+    finally:
+        browser.find_element_by_id(':2l').click()
     # browser.find_element_by_xpath("*//@div[@class='T-Jo J-J5-Ji T-Jo-auq T-Jo-iAfbIe']").click()
     # time.sleep(2)
-    try:
-        WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.ID, ':2t')))
-    finally:
-        browser.find_element_by_id(':2t').click()
+    # try:
+    #     WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.ID, ':2t')))
+    # finally:
+    #     browser.find_element_by_id(':2t').click()
     # time.sleep(2)
 
     try:
